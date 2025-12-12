@@ -1,4 +1,4 @@
-# FlowTask - Productivity Dashboard
+# FlowTask - Productivity Dashboard - Open for Contributions
 
 Transform your new tab into a beautiful productivity workspace.
 
