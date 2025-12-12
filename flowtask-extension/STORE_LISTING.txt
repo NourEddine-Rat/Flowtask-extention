@@ -1,0 +1,99 @@
+CHROME WEB STORE LISTING - COPY/PASTE READY
+============================================
+
+EXTENSION NAME:
+FlowTask - Productivity Dashboard
+
+SHORT DESCRIPTION (132 characters max):
+Transform your new tab into a beautiful productivity dashboard with tasks, timeline, notes, and inspirational quotes.
+
+DETAILED DESCRIPTION:
+---------------------
+FlowTask replaces your new tab with a comprehensive productivity dashboard that helps you stay organized and motivated throughout your day.
+
+🎯 FEATURES:
+
+✅ Smart Task Management
+Add, edit, and track your daily tasks with satisfying completion animations. Watch your progress bar fill up as you accomplish more!
+
+📅 Visual Timeline
+Plan your day with an interactive, vertical timeline. Set times and descriptions for each activity to structure your schedule.
+
+📝 Quick Notes
+Capture ideas instantly with unlimited sticky notes. Perfect for quick thoughts, reminders, or important information.
+
+💡 Inspirational Quotes
+Start each day motivated with beautiful quotes. Add your own favorites or shuffle through our curated collection.
+
+🌙 Dark Mode
+Easy on the eyes with a carefully designed dark theme featuring muted purple accents. Perfect for late-night productivity.
+
+🎨 Customizable Colors
+Make FlowTask yours by customizing the primary color, background, and text colors to match your style.
+
+📊 Gamification
+Stay motivated with:
+• Completion streaks that track your productivity
+• Achievement popups for milestones
+• Celebratory confetti animations
+
+🔄 History & Restore
+Accidentally deleted something? No problem! View your history and restore any deleted tasks, timeline items, or notes.
+
+🔍 Google Search
+Quick access to Google search right from your dashboard - no need to navigate away.
+
+🔒 PRIVACY FIRST:
+• All data stored locally on YOUR device
+• Zero data collection or tracking
+• No external servers
+• No advertisements
+• Your productivity data stays private
+
+💻 WORKS ON:
+• Google Chrome
+• Brave Browser
+• Microsoft Edge
+• Opera
+• Any Chromium-based browser
+
+Start being more productive today with FlowTask!
+
+---------------------
+
+CATEGORY: Productivity
+
+LANGUAGE: English
+
+SINGLE PURPOSE DESCRIPTION (for Chrome Web Store):
+This extension replaces the new tab page with a productivity dashboard that allows users to manage tasks, plan their day with a timeline, take quick notes, and view inspirational quotes.
+
+PERMISSION JUSTIFICATIONS:
+--------------------------
+"storage" permission:
+Used to save user's tasks, notes, timeline entries, quotes, theme preferences, and color customizations locally on their device. No data is transmitted externally.
+
+"chrome_url_overrides" (newtab):
+Required to replace the default new tab page with the FlowTask productivity dashboard interface.
+
+---------------------
+
+SCREENSHOTS NEEDED (1280x800 or 640x400):
+1. Main dashboard - Light mode with sample tasks
+2. Main dashboard - Dark mode
+3. Task completion with confetti animation
+4. Timeline feature close-up
+5. Notes and quotes section
+6. Settings/color customization panel
+
+PROMOTIONAL IMAGES:
+- Small tile: 440x280 pixels
+- Large tile: 920x680 pixels
+- Marquee: 1400x560 pixels
+
+---------------------
+
+SUPPORT/CONTACT INFO:
+Add your email or GitHub repository URL for user support.
+
+============================================

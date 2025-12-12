@@ -1,0 +1,76 @@
+PRIVACY POLICY FOR FLOWTASK EXTENSION
+=====================================
+Last Updated: December 2025
+
+1. INTRODUCTION
+---------------
+FlowTask ("we", "our", or "the extension") is committed to protecting your privacy. 
+This privacy policy explains how FlowTask handles your data.
+
+2. DATA COLLECTION
+------------------
+FlowTask does NOT collect, transmit, or share any personal data.
+
+All data created within FlowTask is stored LOCALLY on your device using 
+your browser's localStorage. This includes:
+- Tasks and to-do items
+- Timeline entries
+- Sticky notes
+- Custom quotes
+- Theme preferences
+- Color customizations
+- Productivity streaks
+
+3. DATA STORAGE
+---------------
+- All data is stored locally in your browser's localStorage
+- Data never leaves your device
+- Data is not sent to any external servers
+- Data is not shared with any third parties
+- We have no access to your data
+
+4. DATA DELETION
+----------------
+You can delete all FlowTask data at any time by:
+- Clearing your browser's localStorage
+- Uninstalling the extension
+- Using the browser's "Clear browsing data" feature
+
+5. PERMISSIONS USED
+-------------------
+FlowTask requests the following permissions:
+
+- "storage": To save your tasks, notes, and preferences locally on your device
+- "chrome_url_overrides" (newtab): To replace your new tab page with FlowTask dashboard
+
+These permissions are used solely for the extension's core functionality.
+
+6. THIRD-PARTY SERVICES
+-----------------------
+FlowTask does not use any third-party analytics, tracking, or advertising services.
+
+The only external connection is to Google Fonts (fonts.googleapis.com) to load 
+the Epilogue font family for the user interface.
+
+7. CHILDREN'S PRIVACY
+---------------------
+FlowTask does not knowingly collect any information from children under 13.
+
+8. CHANGES TO THIS POLICY
+-------------------------
+We may update this privacy policy from time to time. Any changes will be 
+reflected in the "Last Updated" date above.
+
+9. CONTACT
+----------
+If you have questions about this privacy policy, please create an issue 
+on our GitHub repository or contact us through the Chrome Web Store.
+
+10. CONSENT
+-----------
+By using FlowTask, you consent to this privacy policy.
+
+=====================================
+Summary: FlowTask stores all data locally on your device. 
+We do not collect, transmit, or share any of your data.
+=====================================

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowTask - Your Productivity Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Confetti container for celebrations -->
+  <div id="confetti"></div>
+  
+  <!-- Achievement popup -->
+  <div class="achievement-popup" id="achievementPopup">
+    <span class="achievement-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="6"></circle>
+        <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path>
+      </svg>
+    </span>
+    <span class="achievement-text">Task completed!</span>
+  </div>
+
+  <!-- Task View/Edit Modal -->
+  <div class="task-modal" id="taskModal">
+    <div class="task-modal-content">
+      <div class="task-modal-header">
+        <span class="task-modal-number" id="taskModalNumber">Task #1</span>
+        <button class="task-modal-close" id="taskModalClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <textarea class="task-modal-text" id="taskModalText" placeholder="Enter task description..."></textarea>
+      <div class="task-modal-footer">
+        <span class="task-modal-hint">Press Enter to save, Shift+Enter for new line</span>
+        <button class="btn-save" id="taskModalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vault Modal -->
+  <div class="vault-modal" id="vaultModal">
+    <div class="vault-content">
+      <div class="vault-header">
+        <h3>My Vault</h3>
+        <button class="vault-close" id="vaultClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="vault-add">
+        <div class="vault-add-tabs">
+          <button class="vault-add-tab active" data-vault-type="text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            Text
+          </button>
+          <button class="vault-add-tab" data-vault-type="link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            Link
+          </button>
+          <button class="vault-add-tab" data-vault-type="image">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            Image
+          </button>
+        </div>
+        <div class="vault-input-area">
+          <textarea id="vaultTextInput" class="vault-input" placeholder="Enter text to save..."></textarea>
+          <input type="url" id="vaultLinkInput" class="vault-input vault-hidden" placeholder="Paste URL here...">
+          <div id="vaultImageArea" class="vault-image-upload vault-hidden">
+            <input type="file" id="vaultImageFile" accept="image/*" class="vault-file-input">
+            <div class="vault-dropzone" id="vaultDropzone">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <p>Drop image here or <span class="vault-browse">browse</span></p>
+              <span class="vault-dropzone-hint">Supports JPG, PNG, GIF, WebP</span>
+            </div>
+            <div class="vault-image-preview vault-hidden" id="vaultImagePreview">
+              <img id="vaultPreviewImg" src="" alt="Preview">
+              <button class="vault-preview-remove" id="vaultPreviewRemove">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button id="vaultAddBtn" class="btn-save">Save to Vault</button>
+      </div>
+      <div class="vault-list" id="vaultList"></div>
+    </div>
+  </div>
+
+  <!-- Stats Modal -->
+  <div class="stats-modal" id="statsModal">
+    <div class="stats-content">
+      <div class="stats-header">
+        <h3>Productivity Stats</h3>
+        <button class="stats-close" id="statsClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="stats-summary">
+        <div class="stats-card">
+          <span class="stats-card-value" id="statsTotalTasks">0</span>
+          <span class="stats-card-label">Total Tasks</span>
+        </div>
+        <div class="stats-card">
+          <span class="stats-card-value" id="statsCompletedTasks">0</span>
+          <span class="stats-card-label">Completed</span>
+        </div>
+        <div class="stats-card">
+          <span class="stats-card-value" id="statsCompletionRate">0%</span>
+          <span class="stats-card-label">Rate</span>
+        </div>
+        <div class="stats-card">
+          <span class="stats-card-value" id="statsCurrentStreak">0</span>
+          <span class="stats-card-label">Streak</span>
+        </div>
+      </div>
+      <div class="stats-section">
+        <h4>This Month</h4>
+        <div class="stats-chart" id="statsChart"></div>
+        <div class="stats-chart-legend">
+          <span class="legend-item"><span class="legend-dot completed"></span> Completed</span>
+          <span class="legend-item"><span class="legend-dot pending"></span> Added</span>
+        </div>
+      </div>
+      <div class="stats-section">
+        <h4>Daily Activity (Last 7 Days)</h4>
+        <div class="stats-bars" id="statsBars"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Modal -->
+  <div class="history-modal" id="historyModal">
+    <div class="history-content">
+      <div class="history-header">
+        <h3>History</h3>
+        <button class="history-close" id="historyClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="history-tabs">
+        <button class="history-tab active" data-tab="tasks">Tasks</button>
+        <button class="history-tab" data-tab="timeline">Timeline</button>
+        <button class="history-tab" data-tab="notes">Notes</button>
+      </div>
+      <div class="history-list" id="historyList"></div>
+      <button class="history-clear" id="historyClear">Clear History</button>
+    </div>
+  </div>
+
+  <div class="settings-panel" id="settingsPanel">
+    <h3>Customize Colors</h3>
+    <div class="color-option">
+      <label>Primary Color</label>
+      <input type="color" id="primaryColor" value="#ff3500">
+    </div>
+    <div class="color-option">
+      <label>Background</label>
+      <input type="color" id="bgColor" value="#fffbfa">
+    </div>
+    <div class="color-option">
+      <label>Card Background</label>
+      <input type="color" id="cardBgColor" value="#ffffff">
+    </div>
+    <div class="color-option">
+      <label>Text Color</label>
+      <input type="color" id="textColor" value="#212121">
+    </div>
+    <button class="btn-reset" id="resetColors">Reset to Default</button>
+  </div>
+
+  <!-- Header Bar -->
+  <header class="header-bar">
+    <!-- Logo -->
+    <div class="logo">
+      <div class="logo-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+          <path d="M8 16C8 16 11 12 16 12C21 12 24 16 24 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M10 20C10 20 12.5 17 16 17C19.5 17 22 20 22 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          <circle cx="16" cy="10" r="2" fill="currentColor"/>
+        </svg>
+      </div>
+      <span class="logo-text">Flow<span class="logo-accent">Task</span></span>
+    </div>
+
+    <!-- Google Search Bar -->
+    <div class="search-container">
+      <form class="search-form" action="https://www.google.com/search" method="GET">
+        <div class="search-wrapper">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input type="text" name="q" class="search-input" placeholder="Search Google..." autocomplete="off">
+        </div>
+      </form>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <div class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </div>
+
+      <div class="vault-toggle" id="vaultToggle" title="My Vault">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <circle cx="12" cy="12" r="3"></circle>
+          <line x1="12" y1="9" x2="12" y2="7"></line>
+          <line x1="15" y1="12" x2="17" y2="12"></line>
+          <line x1="12" y1="15" x2="12" y2="17"></line>
+          <line x1="9" y1="12" x2="7" y2="12"></line>
+        </svg>
+      </div>
+
+      <div class="stats-toggle" id="statsToggle" title="View Statistics">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      </div>
+
+      <div class="history-toggle" id="historyToggle" title="View History">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </div>
+
+      <div class="settings-toggle" id="settingsToggle" title="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <!-- Left: Todo List -->
+    <section class="panel todo-panel">
+      <div class="panel-header">
+        <h2>Tasks</h2>
+        <div class="task-stats">
+          <span class="streak-badge" id="streakBadge" title="Completion streak">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 23c-3.866 0-7-3.134-7-7 0-2.5 1.5-4.5 3-6.5s3-4.5 3-7.5c0 0 1 1 2 3 .5-1.5 1-3 1-3s3 3.5 3 8c0 1-.5 2-1 3 1-1 2-2 2-2s1 1 1 3c0 3.866-3.134 7-7 7z"/>
+            </svg>
+            <span id="streakCount">0</span>
+          </span>
+          <span class="task-count" id="taskCount">0</span>
+        </div>
+      </div>
+      <div class="todo-input-wrapper">
+        <input type="text" id="todoInput" placeholder="Add a new task..." class="todo-input">
+        <button id="addTodo" class="btn-add">+</button>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <ul class="todo-list" id="todoList"></ul>
+    </section>
+
+    <!-- Center: Timeline -->
+    <section class="panel timeline-panel">
+      <div class="panel-header">
+        <h2>Timeline</h2>
+        <button id="addTimelineItem" class="btn-add-small">+ Add</button>
+      </div>
+      <div class="timeline-wrapper">
+        <div class="timeline-track"></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </section>
+
+    <!-- Center-Right: Sticky Notes -->
+    <section class="panel notes-panel">
+      <div class="panel-header">
+        <h2>Quick Notes</h2>
+        <button id="addNote" class="btn-add-small">+ Add Note</button>
+      </div>
+      <div class="notes-scroll" id="notesScroll">
+        <div class="notes-grid" id="notesGrid"></div>
+      </div>
+    </section>
+
+    <!-- Right: Quotes & Info -->
+    <section class="panel quotes-panel">
+      <div class="panel-header">
+        <h2>Daily Inspiration</h2>
+        <div class="quote-actions">
+          <button id="editQuote" class="btn-icon" title="Edit Quote">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </button>
+          <button id="addQuote" class="btn-icon" title="Add Quote">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+          <button id="newQuote" class="btn-icon" title="Random Quote">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="quote-card" id="quoteCard">
+        <p class="quote-text" id="quoteText">"The secret of getting ahead is getting started."</p>
+        <span class="quote-author" id="quoteAuthor">— Mark Twain</span>
+        <button class="quote-delete" id="deleteQuote" title="Delete Quote">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Quote Edit Modal -->
+      <div class="quote-edit-form" id="quoteEditForm">
+        <input type="text" id="quoteTextInput" placeholder="Enter quote text..." class="quote-input">
+        <input type="text" id="quoteAuthorInput" placeholder="Author name..." class="quote-input">
+        <div class="quote-form-actions">
+          <button id="saveQuote" class="btn-save">Save</button>
+          <button id="cancelQuote" class="btn-cancel">Cancel</button>
+        </div>
+      </div>
+      <div class="datetime-widget">
+        <div class="time" id="currentTime">00:00</div>
+        <div class="date" id="currentDate">Loading...</div>
+      </div>
+      <div class="greeting" id="greeting">Good morning!</div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
